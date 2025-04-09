@@ -18,10 +18,10 @@ jobs:
         run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_SERVER }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
 
       - name: Pull image from Docker Hub
-        run: docker pull nginx:latest
+        run: docker pull postgres:latest
 
       - name: Tag image for Private Registry
-        run: docker tag nginx:latest ${{ secrets.REGISTRY_SERVER }}/hu_vw/nginx:latest
+        run: docker tag postgres:latest ${{ secrets.REGISTRY_SERVER }}/hu_vw/postgres:latest
 
       - name: Push image to Private Registry
-        run: docker push ${{ secrets.REGISTRY_SERVER }}/hu_vw/nginx:latest
+        run: docker push ${{ secrets.REGISTRY_SERVER }}/hu_vw/postgres:latest
