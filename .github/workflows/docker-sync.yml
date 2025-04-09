@@ -10,8 +10,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+        
+      - name: show variables
+        run: echo "${{ secrets.REGISTRY_PASSWORD }}" 
+        
       - name: Log in to Private Registry
-        run: echo "${{ aliyun.REGISTRY_PASSWORD }}" | docker login ${{ aliyun.REGISTRY_SERVER }} -u ${{ aliyun.REGISTRY_USERNAME }} --password-stdin
+        run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_SERVER }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
 
       - name: Pull image from Docker Hub
         run: docker pull nginx:latest
