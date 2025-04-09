@@ -1,0 +1,23 @@
+name: Sync Docker Hub Image to Private Registry
+
+on:
+  workflow_dispatch: # 可以手动触发，也可改为 schedule 或 push
+
+jobs:
+  sync-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log in to Private Registry
+        run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_SERVER }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
+
+      - name: Pull image from Docker Hub
+        run: docker pull nginx:latest
+
+      - name: Tag image for Private Registry
+        run: docker tag nginx:latest ${{ secrets.REGISTRY_SERVER }}/your-namespace/nginx:latest
+
+      - name: Push image to Private Registry
+        run: docker push ${{ secrets.REGISTRY_SERVER }}/your-namespace/nginx:latest
