@@ -2,15 +2,15 @@ name: Sync Docker Hub Image to Private Registry
 
 on:
   workflow_dispatch: # 可以手动触发，也可改为 schedule 或 push
-  inputs:
-      sourceImageName:
-        description: "sourceImageName"
-        required: true
-        default: "sourceImageName"
-      targetImageName:
-        description: "targetImageName"
-        required: true
-        default: "targetImageName"
+    inputs:
+        sourceImageName:
+          description: "sourceImageName"
+          required: true
+          default: "sourceImageName"
+        targetImageName:
+          description: "targetImageName"
+          required: true
+          default: "targetImageName"
 
 env:
   source_image_name: ${{ github.event.inputs.sourceImageName }}
