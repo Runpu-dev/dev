@@ -14,7 +14,7 @@ jobs:
 
         
       - name: show image name
-        run: echo "${{ env.IMAGENAME }}" 
+        run: echo "$image_name" 
         
       - name: Log in to Private Registry
         run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_SERVER }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
