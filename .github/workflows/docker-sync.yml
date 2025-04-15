@@ -18,7 +18,7 @@ jobs:
         run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_SERVER }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
 
       - name: Pull image from Docker Hub
-        run: docker pull ${{ imageName }}
+        run: docker pull $IMAGENAME
 
       - name: Tag image for Private Registry
         run: docker tag $IMAGENAME ${{ secrets.REGISTRY_SERVER }}/hu_vw/$IMAGENAME
