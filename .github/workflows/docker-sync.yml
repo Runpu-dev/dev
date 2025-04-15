@@ -11,17 +11,17 @@ jobs:
         uses: actions/checkout@v4
 
         
-      - name: show variables
-        run: echo "${{ secrets.REGISTRY_PASSWORD }}" 
+      - name: show image name
+        run: echo "${{ imageName }}" 
         
       - name: Log in to Private Registry
         run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_SERVER }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
 
       - name: Pull image from Docker Hub
-        run: docker pull ghcr.io/open-webui/open-webui:main
+        run: docker pull ${{ imageName }}
 
       - name: Tag image for Private Registry
-        run: docker tag postgres:latest ${{ secrets.REGISTRY_SERVER }}/hu_vw/postgres:latest
+        run: docker tag ${{ imageName }} ${{ secrets.REGISTRY_SERVER }}/hu_vw/${{ imageName }}
 
       - name: Push image to Private Registry
         run: docker push ${{ secrets.REGISTRY_SERVER }}/hu_vw/postgres:latest
