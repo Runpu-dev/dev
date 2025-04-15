@@ -2,6 +2,8 @@ name: Sync Docker Hub Image to Private Registry
 
 on:
   workflow_dispatch: # 可以手动触发，也可改为 schedule 或 push
+env:
+  image_name: ${{ vars.IMAGENAME }}
 
 jobs:
   sync-image:
@@ -12,16 +14,16 @@ jobs:
 
         
       - name: show image name
-        run: echo "${{ vars.IMAGENAME }}" 
+        run: echo "${{ env.IMAGENAME }}" 
         
       - name: Log in to Private Registry
         run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_SERVER }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
 
       - name: Pull image from Docker Hub
-        run: docker pull $IMAGENAME
+        run: docker pull ${{ env.IMAGENAME }}
 
       - name: Tag image for Private Registry
-        run: docker tag $IMAGENAME ${{ secrets.REGISTRY_SERVER }}/hu_vw/$IMAGENAME
+        run: docker tag ${{ env.IMAGENAME }} ${{ secrets.REGISTRY_SERVER }}/hu_vw/${{ env.IMAGENAME }}
 
       - name: Push image to Private Registry
-        run: docker push ${{ secrets.REGISTRY_SERVER }}/hu_vw/postgres:latest
+        run: docker push ${{ secrets.REGISTRY_SERVER }}/hu_vw/${{ env.IMAGENAME }}
