@@ -12,7 +12,7 @@ jobs:
 
         
       - name: show image name
-        run: echo "${{ IMAGENAME }}" 
+        run: echo "$IMAGENAME" 
         
       - name: Log in to Private Registry
         run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_SERVER }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
@@ -21,7 +21,7 @@ jobs:
         run: docker pull ${{ imageName }}
 
       - name: Tag image for Private Registry
-        run: docker tag ${{ IMAGENAME }} ${{ secrets.REGISTRY_SERVER }}/hu_vw/${{ IMAGENAME }}
+        run: docker tag $IMAGENAME ${{ secrets.REGISTRY_SERVER }}/hu_vw/$IMAGENAME
 
       - name: Push image to Private Registry
         run: docker push ${{ secrets.REGISTRY_SERVER }}/hu_vw/postgres:latest
